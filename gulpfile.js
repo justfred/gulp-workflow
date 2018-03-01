@@ -3,10 +3,12 @@ const sass = require('gulp-sass');
 const browserSync = require('browser-sync');
 const reload = browserSync.reload;
 const autoprefixer = require('gulp-autoprefixer');
+const clean = require('gulp-clean');
 
 const SOURCEPATHS = {
   sassSource: 'src/scss/*.scss',
-  htmlSource: 'src/*.html'
+  htmlSource: 'src/*.html',
+  jsSource: 'src/js/**'
 }
 
 const APPPATH = {
@@ -14,6 +16,17 @@ const APPPATH = {
   css: 'app/css',
   js: 'app/js'
 }
+
+//clean deleted html files
+gulp.task('clean-html', function() {
+    return gulp.src(APPPATH.root + '/*.html', {read: false, force: true})
+      .pipe(clean());
+});
+
+gulp.task('clean-scripts', function() {
+    return gulp.src(APPPATH.js + '/*.js', {read: false, force: true})
+      .pipe(clean());
+});
 
 //process sass scss into css
 gulp.task('sass', function() {
@@ -27,8 +40,13 @@ gulp.task('sass', function() {
     .pipe(gulp.dest(APPPATH.css));
 });
 
+gulp.task('scripts', ['clean-scripts'], function() {
+    gulp.src(SOURCEPATHS.jsSource)
+      .pipe(gulp.dest(APPPATH.js))
+});
+
 //copy html files
-gulp.task('copy', function() {
+gulp.task('copy', ['clean-html'], function() {
     gulp.src(SOURCEPATHS.htmlSource)
       .pipe(gulp.dest(APPPATH.root))
 });
@@ -47,9 +65,11 @@ gulp.task('serve', ['sass'], function() {
 });
 
 //watch these directories and run task when anything changes
-gulp.task('watch', ['serve', 'sass', 'copy'], function() {
+gulp.task('watch', ['serve', 'sass', 'copy', 'clean-html', 'scripts', 'clean-scripts'], function() {
   gulp.watch([SOURCEPATHS.sassSource], ['sass']);
   gulp.watch([SOURCEPATHS.htmlSource], ['copy']);
+  gulp.watch([SOURCEPATHS.jsSource], ['scripts']);
 });
 
+//default task if gulp is run with no task specified
 gulp.task('default', ['watch']);
