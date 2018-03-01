@@ -31,4 +31,9 @@ gulp.task('serve', ['sass'], function() {
     });
 });
 
-gulp.task('default', ['serve']);
+//watch these directories and run task when anything changes
+gulp.task('watch', ['serve', 'sass'], function() {
+  gulp.watch([SOURCEPATHS.sassSource], ['sass']);
+});
+
+gulp.task('default', ['watch']);

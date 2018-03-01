@@ -1,5 +1,9 @@
 $black: #000000;
+$white: #ffffff;
 
 body {
-  background-color: red;
+  background-color: $white;
+}
+h1 {
+  color: green;
 }
