@@ -1,7 +1,7 @@
 {
   "name": "gulp-workflow",
   "version": "1.0.0",
-  "description": "",
+  "description": "https://www.udemy.com/modern-web-development-with-sass-gulp-npm-web-workflows",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -17,11 +17,18 @@
   },
   "homepage": "https://github.com/justfred/gulp-workflow#readme",
   "devDependencies": {
+    "bootstrap": "^4.0.0",
     "browser-sync": "^2.23.6",
+    "browserify": "^16.1.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^5.0.0",
+    "gulp-browserify": "^0.5.1",
     "gulp-clean": "^0.4.0",
     "gulp-concat": "^2.6.1",
-    "gulp-sass": "^3.1.0"
+    "gulp-sass": "^3.1.0",
+    "jquery": "^3.3.1",
+    "mustache": "^2.3.0",
+    "popper": "^1.0.1",
+    "popper.js": "^1.12.9"
   }
 }
