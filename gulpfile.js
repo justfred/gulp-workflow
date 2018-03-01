@@ -4,6 +4,7 @@ const browserSync = require('browser-sync');
 const reload = browserSync.reload;
 const autoprefixer = require('gulp-autoprefixer');
 const clean = require('gulp-clean');
+const concat = require('gulp-concat');
 
 const SOURCEPATHS = {
   sassSource: 'src/scss/*.scss',
@@ -17,12 +18,11 @@ const APPPATH = {
   js: 'app/js'
 }
 
-//clean deleted html files
+//clean deleted files
 gulp.task('clean-html', function() {
     return gulp.src(APPPATH.root + '/*.html', {read: false, force: true})
       .pipe(clean());
 });
-
 gulp.task('clean-scripts', function() {
     return gulp.src(APPPATH.js + '/*.js', {read: false, force: true})
       .pipe(clean());
@@ -40,8 +40,10 @@ gulp.task('sass', function() {
     .pipe(gulp.dest(APPPATH.css));
 });
 
+//copy javascript files
 gulp.task('scripts', ['clean-scripts'], function() {
     gulp.src(SOURCEPATHS.jsSource)
+      .pipe(concat('main.js'))
       .pipe(gulp.dest(APPPATH.js))
 });
 
