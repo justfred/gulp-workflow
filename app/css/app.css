@@ -5,3 +5,19 @@ body {
 h1 {
   color: green;
 }
+
+h1.hover {
+  -webkit-transition: color 1s ease;
+  transition: color 1s ease;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  height: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  background: -webkit-gradient(linear, left top, left bottom, from(#e98a00), to(#f5aa2f));
+  background: linear-gradient(#e98a00, #f5aa2f);
+}
