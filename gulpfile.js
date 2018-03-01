@@ -6,6 +6,7 @@ const autoprefixer = require('gulp-autoprefixer');
 const browserify = require('gulp-browserify');
 const clean = require('gulp-clean');
 const concat = require('gulp-concat');
+const merge = require('merge-stream');
 
 const SOURCEPATHS = {
   sassSource: 'src/scss/*.scss',
@@ -31,14 +32,21 @@ gulp.task('clean-scripts', function() {
 
 //process sass scss into css
 gulp.task('sass', function() {
-  return gulp.src(SOURCEPATHS.sassSource)
-  .pipe(autoprefixer({
+  let bootstrapCSS = gulp.src('./node_modules/bootstrap/dist/css/bootstrap.css');
+  let sassFiles = gulp.src(SOURCEPATHS.sassSource)
+    .pipe(autoprefixer({
         browsers: ['last 2 versions'],
         cascade: false
     }))
     //compact/expanded/compressed/nested/expanded
-    .pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
-    .pipe(gulp.dest(APPPATH.css));
+    .pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError));
+
+    //overwrite bootstrap with our files
+    return merge(bootstrapCSS, sassFiles)
+      .pipe(concat('app.css'))
+      .pipe(gulp.dest(APPPATH.css));
+
+
 });
 
 //copy javascript files
